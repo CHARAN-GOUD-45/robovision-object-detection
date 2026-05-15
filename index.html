@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RoboVision — Object Detection System</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="scanline"></div>
+
+  <header>
+    <div class="logo">
+      <span class="dot"></span>
+      <span>ROBO<strong>VISION</strong></span>
+    </div>
+    <div class="status-bar">
+      <span class="status-indicator" id="statusDot"></span>
+      <span id="statusText">INITIALIZING...</span>
+    </div>
+    <div class="fps-counter">FPS: <span id="fpsDisplay">--</span></div>
+  </header>
+
+  <main>
+    <div class="vision-panel">
+      <div class="camera-frame">
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+        <video id="webcam" autoplay playsinline muted></video>
+        <canvas id="overlay"></canvas>
+        <div class="scan-line" id="scanLine"></div>
+        <div class="camera-label">CAM_01 // LIVE</div>
+      </div>
+    </div>
+
+    <aside class="info-panel">
+      <section class="detected-section">
+        <h2>DETECTED OBJECTS</h2>
+        <div id="detectedList" class="detected-list">
+          <p class="empty-state">Awaiting camera feed...</p>
+        </div>
+      </section>
+
+      <section class="stats-section">
+        <h2>SYSTEM STATS</h2>
+        <div class="stat-row"><span>MODEL</span><span id="modelName">COCO-SSD v2</span></div>
+        <div class="stat-row"><span>OBJECTS</span><span id="objCount">0</span></div>
+        <div class="stat-row"><span>CONFIDENCE</span><span id="avgConf">--%</span></div>
+        <div class="stat-row"><span>INFERENCE</span><span id="inferenceTime">-- ms</span></div>
+        <div class="stat-row"><span>TOTAL SEEN</span><span id="totalSeen">0</span></div>
+      </section>
+
+      <section class="log-section">
+        <h2>DETECTION LOG</h2>
+        <div id="logList" class="log-list"></div>
+      </section>
+
+      <div class="controls">
+        <button id="startBtn" class="btn btn-primary">START CAMERA</button>
+        <button id="pauseBtn" class="btn btn-secondary" disabled>PAUSE</button>
+        <label class="threshold-label">
+          MIN CONFIDENCE
+          <input type="range" id="confidenceSlider" min="10" max="95" value="50" />
+          <span id="confidenceValue">50%</span>
+        </label>
+      </div>
+    </aside>
+  </main>
+
+  <!-- TensorFlow.js + COCO-SSD via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.17.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
